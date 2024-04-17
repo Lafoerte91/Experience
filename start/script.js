@@ -63,3 +63,21 @@ tabContainer.addEventListener('click', function(e) {
     document.querySelector(`.operations__content--${clicked.dataset.tab}`).classList.add('operations__content--active')
   }
 })
+
+// Создаем прозрачное меню
+const nav = document.querySelector('.nav')
+
+function hover(e, opacity) {
+  if(e.target.classList.contains('nav__link')) {
+    const link = e.target
+    const siblings = link.closest('.nav').querySelectorAll('.nav__link')
+    const logo = link.closest('.nav').querySelector('.nav__logo')
+    siblings.forEach(el => {
+      if(el !== link) el.style.opacity = this
+    })
+    logo.style.opacity = this
+  }
+}
+
+nav.addEventListener('mouseover', hover.bind(0.5))
+nav.addEventListener('mouseout', hover.bind(1))
