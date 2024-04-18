@@ -115,3 +115,18 @@ allSections.forEach(function(section) {
   sectionObserver.observe(section)
   section.classList.add('section--hidden')
 })
+
+// ленивая подгрузка изображений
+function loadImg(entries, observer) {
+  if(!entries[0].isIntersecting) return
+  entries[0].target.src = entries[0].target.dataset.src
+  entries[0].target.addEventListener('load', function() {
+    entries[0].target.classList.remove('lazy-img')
+  })
+  observer.unobserve(entries[0].target)
+}
+
+const images = document.querySelectorAll('img[data-src]')
+const imgObserver = new IntersectionObserver(loadImg, {threshold: 0.15})
+
+images.forEach(img => imgObserver.observe(img))
