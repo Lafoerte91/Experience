@@ -81,3 +81,21 @@ function hover(e, opacity) {
 
 nav.addEventListener('mouseover', hover.bind(0.5))
 nav.addEventListener('mouseout', hover.bind(1))
+
+// появление меню после прокрутки
+const options = {
+  threshold: 0,
+  rootMargin: '-90px'
+}
+
+function callback(entries) {
+  if(!entries[0].isIntersecting === true) {
+    nav.classList.add('sticky')
+  } else {
+    nav.classList.remove('sticky')
+  }
+}
+
+const observer = new IntersectionObserver(callback, options)
+
+observer.observe(document.querySelector('.header'))
