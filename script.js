@@ -99,3 +99,19 @@ function callback(entries) {
 const observer = new IntersectionObserver(callback, options)
 
 observer.observe(document.querySelector('.header'))
+
+// всплытие секций
+function revealSection(entries, observer) {
+  if(entries[0].isIntersecting) {
+    entries[0].target.classList.remove('section--hidden')
+    observer.unobserve(entries[0].target)
+  }
+}
+
+const allSections = document.querySelectorAll('section')
+const sectionObserver = new IntersectionObserver(revealSection, {threshold: 0.15})
+
+allSections.forEach(function(section) {
+  sectionObserver.observe(section)
+  section.classList.add('section--hidden')
+})
