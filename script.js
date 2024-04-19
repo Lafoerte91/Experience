@@ -101,20 +101,20 @@ const observer = new IntersectionObserver(callback, options)
 observer.observe(document.querySelector('.header'))
 
 // всплытие секций
-function revealSection(entries, observer) {
-  if(entries[0].isIntersecting) {
-    entries[0].target.classList.remove('section--hidden')
-    observer.unobserve(entries[0].target)
-  }
-}
+// function revealSection(entries, observer) {
+//   if(entries[0].isIntersecting) {
+//     entries[0].target.classList.remove('section--hidden')
+//     observer.unobserve(entries[0].target)
+//   }
+// }
 
-const allSections = document.querySelectorAll('section')
-const sectionObserver = new IntersectionObserver(revealSection, {threshold: 0.15})
+// const allSections = document.querySelectorAll('section')
+// const sectionObserver = new IntersectionObserver(revealSection, {threshold: 0.15})
 
-allSections.forEach(function(section) {
-  sectionObserver.observe(section)
-  section.classList.add('section--hidden')
-})
+// allSections.forEach(function(section) {
+//   sectionObserver.observe(section)
+//   section.classList.add('section--hidden')
+// })
 
 // ленивая подгрузка изображений
 function loadImg(entries, observer) {
@@ -130,3 +130,40 @@ const images = document.querySelectorAll('img[data-src]')
 const imgObserver = new IntersectionObserver(loadImg, {threshold: 0.15})
 
 images.forEach(img => imgObserver.observe(img))
+
+// слайдер
+const slides = document.querySelectorAll('.slide')
+const maxSlides = slides.length
+const slider = document.querySelector('.slider')
+const btnRight = document.querySelector('.slider__btn--right')
+const btnLeft = document.querySelector('.slider__btn--left')
+let currSlide = 0
+
+function goToSlide(slide) {
+  slides.forEach((el, index) => {
+    el.style.transform = `translateX(${(index - slide) * 100}%)`
+  })
+}
+
+goToSlide(0)
+
+function nextSlide() {
+  if(currSlide == maxSlides - 1) {
+    currSlide = 0
+  } else {
+    currSlide++
+  }
+  goToSlide(currSlide)
+}
+function prevSlide() {
+  if(currSlide == 0) {
+    currSlide = maxSlides - 1
+  } else {
+    currSlide--
+  }
+  goToSlide(currSlide)
+}
+
+btnRight.addEventListener('click', nextSlide)
+btnLeft.addEventListener('click', prevSlide)
+
